@@ -27,6 +27,7 @@ public class VoiceManager : MonoBehaviour
         _keywordCollection.Add("Move Right", MoveRightCommand);
         _keywordCollection.Add("Move Down", MoveDownCommand);
         _keywordCollection.Add("Move Up", MoveUpCommand);
+        _keywordCollection.Add("Stop Listening", StopListeningCommand);
 
         _keywordRecognizer = new KeywordRecognizer(_keywordCollection.Keys.ToArray());
         _keywordRecognizer.OnPhraseRecognized += KeywordRecognizer_OnPhraseRecognized;
@@ -37,7 +38,7 @@ public class VoiceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     private void KeywordRecognizer_OnPhraseRecognized(PhraseRecognizedEventArgs args)
@@ -76,5 +77,11 @@ public class VoiceManager : MonoBehaviour
     private void MoveDownCommand(PhraseRecognizedEventArgs args)
     {
         WriteText(args.text);
+    }
+
+    private void StopListeningCommand(PhraseRecognizedEventArgs args)
+    {
+        WriteText(args.text);
+        _keywordRecognizer.Stop();
     }
 }
